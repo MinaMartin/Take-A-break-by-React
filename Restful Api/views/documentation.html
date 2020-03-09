@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <link rel="styleSheet" href="style.css">
+</head>
+
+<body>
+    <h2>Movies</h2>
+    <p>All the paths starts with /movies --> Ex. for end point /watched the path becomes /movies/watched </p>
+    <p class="important">Authentication token -which is valid for only 1 hour- must be included in the header of each request of the movies</p>
+    <table>
+        <tr>
+            <th>End Points</th>
+            <th>Request Method</th>
+            <th>message</th>
+            <th>Notes</th>
+        </tr>
+        <tr>
+            <td>/</td>
+            <td>GET</td>
+            <td>Matched movies or All the movies</td>
+            <td>
+                Mentioning query parameter page = (Number) in the get request will trigger the pagination <br> but all movies are returned by default (/movies/ only without query parameter page) without pagination
+                <br> query params name/releaseYear/genre are for search for Ex. <br> movies?releaseYear=2010 --> search by release Year <br> movies?genre=Horror --> search by genre <br> pagination Always on except when you request all the movies by movies/
+            </td>
+        </tr>
+        <tr>
+            <td>/:movieId</td>
+            <td>GET</td>
+            <td>The movie You requested</td>
+            <td>---</td>
+        </tr>
+        <tr>
+            <td>/edit-movie/:movieId</td>
+            <td>PATCH</td>
+            <td>Movie Updated Successfully</td>
+            <td>---</td>
+        </tr>
+        <tr>
+            <td>/:movieId</td>
+            <td>DELETE</td>
+            <td>Movie Deleted Successfully</td>
+            <td>---</td>
+        </tr>
+        <tr>
+            <td>/watched</td>
+            <td>GET</td>
+            <td>Watched movies</td>
+            <td>
+                /movies/toBeWatched <br> /movies/toBeWatched?page=1 --> same result as the above end point <br> /movies/toBeWatched?page=2 --> page = 2
+            </td>
+        </tr>
+        <tr>
+            <td>/toBeWatched</td>
+            <td>GET</td>
+            <td>ToBeWatched movies</td>
+            <td>Same as watched</td>
+        </tr>
+        <tr>
+            <td>/add-movie</td>
+            <td>POST</td>
+            <td>Movie Created Successfully</td>
+            <td>
+                req body Ex.: <br> {"name":"Frozen","genre" : "Animation","releaseYear":2010} <br> movies are unwatched by default and year of watch by default is 0 <br> if req body contain year of watch or watched = true that will update the default
+                ofcourse
+            </td>
+        </tr>
+        <tr>
+            <td>/addToWatchedList/:movieId</td>
+            <td>PATCH</td>
+            <td>Movie added to watched Movies</td>
+            <td>
+                movies/addToWatchedList/5e5beb0d69f38813b4ea1a78 <br> req body Ex.: {"yearYouWatchedIn" : number} <br> if no request body yearYouWatchedIn will be the current year
+            </td>
+        </tr>
+    </table>
+
+    <h2>Authentication</h2>
+    <p>All the pathes starts with /auth --> Ex. for end point /login the path becomes /auth/login </p>
+    <table>
+        <tr>
+            <th>End Points</th>
+            <th>Request Method</th>
+            <th>message</th>
+            <th>Notes</th>
+        </tr>
+        <tr>
+            <td>/signUp</td>
+            <td>POST</td>
+            <td>User Signed up Successfully</td>
+            <td>
+                req body Ex.: <br> {"name":"...","email":"test@test.com","password":'123456',"confirmedPassword":'123456'}
+                <br> the email field must contain a valid email address <br> If the same email found in the DB an error message occured ('Email Already Exists') <br> password with min length = 5 and max length = 12 <br> name field cannot be empty <br>                ofcourse password and confirmed password must be equal
+            </td>
+        </tr>
+        <tr>
+            <td>/login</td>
+            <td>POST</td>
+            <td>User Logged in Successfully</td>
+            <td>
+                {"email":"test@test.com","password":'123456'} <br> If the email is not found in the DB A error message occured ('No User with this email') <br> password with min length = 5 and max length = 12
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
